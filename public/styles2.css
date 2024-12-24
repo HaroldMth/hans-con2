@@ -1,0 +1,250 @@
+/* Advanced Futuristic CSS with Dynamic Effects */
+
+:root {
+    --neon-blue: #12c2e9;
+    --neon-purple: #c471ed;
+    --neon-highlight: #f64f59;
+    --glass-bg: rgba(16, 20, 34, 0.8);
+  }
+  
+  body {
+    font-family: 'Space Grotesk', 'Orbitron', sans-serif;
+    background: url('https://ibb.co/7rrqdLn') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: #e0e7ff;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Animated background overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(135deg, rgba(15, 27, 45, 0.85) 0%, rgba(22, 36, 64, 0.85) 50%, rgba(31, 47, 79, 0.85) 100%),
+      repeating-linear-gradient(90deg, transparent 0px, transparent 29px, rgba(18, 194, 233, 0.03) 29px, rgba(18, 194, 233, 0.03) 30px),
+      repeating-linear-gradient(0deg, transparent 0px, transparent 29px, rgba(18, 194, 233, 0.03) 29px, rgba(18, 194, 233, 0.03) 30px);
+    animation: gridPulse 4s infinite linear;
+    pointer-events: none;
+  }
+  
+  /* Scanning line effect */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent 0%,
+      rgba(18, 194, 233, 0) 20%,
+      rgba(18, 194, 233, 0.1) 50%,
+      rgba(18, 194, 233, 0) 80%,
+      transparent 100%
+    );
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+  }
+  
+  .container {
+    max-width: 450px;
+    margin: 50px auto;
+    padding: 30px;
+    background: var(--glass-bg);
+    border-radius: 16px;
+    box-shadow: 
+      0 0 20px rgba(0, 123, 255, 0.2),
+      0 0 60px rgba(0, 123, 255, 0.1),
+      inset 0 0 30px rgba(18, 194, 233, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(18, 194, 233, 0.2);
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+  
+  /* Holographic edge effect */
+  .container::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(45deg, 
+      transparent 0%,
+      rgba(18, 194, 233, 0.1) 25%,
+      rgba(196, 113, 237, 0.1) 50%,
+      rgba(246, 79, 89, 0.1) 75%,
+      transparent 100%
+    );
+    z-index: -1;
+    animation: borderGlow 6s linear infinite;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 2.2em;
+    margin-bottom: 1.5em;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+    text-shadow: 
+      0 0 10px rgba(18, 194, 233, 0.5),
+      0 0 20px rgba(18, 194, 233, 0.3),
+      0 0 30px rgba(18, 194, 233, 0.1);
+  }
+  
+  /* Cyber underline for heading */
+  h1::after {
+    content: '';
+    position: absolute;
+    left: 25%;
+    bottom: -10px;
+    width: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent,
+      var(--neon-blue),
+      var(--neon-purple),
+      var(--neon-blue),
+      transparent
+    );
+    animation: underlinePulse 3s infinite;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transform-style: preserve-3d;
+  }
+  
+  input {
+    background: rgba(16, 20, 34, 0.6);
+    border: 1px solid rgba(18, 194, 233, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.3s ease;
+    position: relative;
+    transform-style: preserve-3d;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: var(--neon-blue);
+    box-shadow: 
+      0 0 15px rgba(18, 194, 233, 0.3),
+      0 0 30px rgba(18, 194, 233, 0.1);
+    background: rgba(16, 20, 34, 0.8);
+    transform: translateZ(10px);
+  }
+  
+  button {
+    background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+    color: #fff;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  button:hover {
+    transform: translateY(-2px) translateZ(20px);
+    box-shadow: 
+      0 5px 15px rgba(18, 194, 233, 0.4),
+      0 0 30px rgba(18, 194, 233, 0.2);
+    animation: buttonGlow 1.5s infinite;
+  }
+  
+  button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+  }
+  
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+  }
+  
+  /* Advanced Animations */
+  @keyframes gridPulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+  
+  @keyframes scanline {
+    0% { transform: translateX(-50%) skewX(-45deg); }
+    100% { transform: translateX(50%) skewX(-45deg); }
+  }
+  
+  @keyframes borderGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes underlinePulse {
+    0% { opacity: 0.5; transform: scaleX(0.95); }
+    50% { opacity: 1; transform: scaleX(1.05); }
+    100% { opacity: 0.5; transform: scaleX(0.95); }
+  }
+  
+  @keyframes buttonGlow {
+    0% { box-shadow: 0 0 15px var(--neon-blue); }
+    50% { box-shadow: 0 0 30px var(--neon-purple); }
+    100% { box-shadow: 0 0 15px var(--neon-blue); }
+  }
+  
+  @keyframes shine {
+    0% { left: -50%; }
+    100% { left: 150%; }
+  }
+  
+  /* Responsive hover effects */
+  @media (hover: hover) {
+    .container:hover {
+      transform: translateZ(20px) rotateX(2deg) rotateY(2deg);
+      transition: transform 0.3s ease;
+    }
+    
+    input:hover:not(:focus) {
+      transform: translateZ(5px);
+      box-shadow: 0 5px 15px rgba(18, 194, 233, 0.2);
+    }
+  }
+  
+  /* Add this in your HTML head */
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Orbitron:wght@400;700&display=swap');

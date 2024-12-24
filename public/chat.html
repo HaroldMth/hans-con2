@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico">
+    <title>Hans Con - Chat</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chat with <span id="chat-with">User</span></h1>
+        </header>
+        <div class="chat-box" id="chat-box">
+            <!-- Chat messages will be dynamically loaded here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message" placeholder="Type your message..." />
+            <button id="send" class="send-btn">Send</button>
+        </div>
+        <footer>
+            <p>&copy; 2024 Hans Tech | Version v2.1.0</p>
+        </footer>
+    </div>
+    <script>
+        const chatBox = document.getElementById("chat-box");
+        const messageInput = document.getElementById("message");
+        const sendButton = document.getElementById("send");
+        const chatWith = document.getElementById("chat-with");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetUser = urlParams.get("user");
+
+        // Set chat header
+        chatWith.textContent = targetUser === "You" ? "Yourself" : targetUser;
+
+        // Load chat messages
+        function loadChat() {
+            fetch(`/chat/${targetUser}`)
+                .then(response => response.json())
+                .then(messages => {
+                    chatBox.innerHTML = "";
+                    messages.forEach(msg => {
+                        const msgDiv = document.createElement("div");
+                        msgDiv.className = msg.from === targetUser ? "message received" : "message sent";
+                        msgDiv.textContent = `${msg.from}: ${msg.message}`;
+                        chatBox.appendChild(msgDiv);
+                    });
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                });
+        }
+
+        // Send a message
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                fetch(`/chat/${targetUser}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            messageInput.value = "";
+                            loadChat();
+                        } else {
+                            alert("Error sending message.");
+                        }
+                    });
+            }
+        }
+
+        // Event listeners
+        sendButton.addEventListener("click", sendMessage);
+        messageInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") sendMessage();
+        });
+
+        // Initial chat load and refresh
+        loadChat();
+        setInterval(loadChat, 3000); // Refresh every 3 seconds
+    </script>
+</body>
+</html>

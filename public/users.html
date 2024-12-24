@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico">
+    <title>Hans Con - Users</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome, <span id="username">User</span>!</h1>
+        </header>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search for a user..." oninput="filterUsers()">
+        </div>
+        <div id="users-list" class="users-list">
+            <!-- Users will be dynamically loaded here -->
+        </div>
+        <footer>
+            <button id="logout" class="logout-btn">Logout</button>
+            <p>&copy; 2024 Hans Tech | Version v2.1.0</p>
+        </footer>
+    </div>
+    <script>
+        const usersList = document.getElementById("users-list");
+        const usernameDisplay = document.getElementById("username");
+
+        // Fetch users from the server
+        fetch('/users')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    usernameDisplay.textContent = data.currentUser; // Set the current user's name
+                    loadUsers(data.users);
+                } else {
+                    alert("Error loading users. Please log in.");
+                    window.location.href = "/index.html";
+                }
+            });
+
+        // Load users into the DOM
+        function loadUsers(users) {
+            usersList.innerHTML = "";
+            users.forEach(user => {
+                const userButton = document.createElement("button");
+                userButton.textContent = user.username;
+                userButton.classList.add("user-btn");
+                userButton.onclick = () => {
+                    window.location.href = `/chat.html?user=${user.username}`;
+                };
+                usersList.appendChild(userButton);
+            });
+        }
+
+        // Filter users based on search input
+        function filterUsers() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const userButtons = usersList.querySelectorAll("button");
+            userButtons.forEach(button => {
+                button.style.display = button.textContent.toLowerCase().includes(query) ? "" : "none";
+            });
+        }
+
+        // Logout functionality
+        document.getElementById("logout").addEventListener("click", () => {
+            fetch('/logout', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "/index.html";
+                    } else {
+                        alert("Error logging out.");
+                    }
+                });
+        });
+    </script>
+</body>
+</html>
